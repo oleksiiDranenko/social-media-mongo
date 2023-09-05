@@ -1,7 +1,7 @@
 'use client'
 
 interface InputInterface {
-    onChange(): void,
+    onChange(e: React.ChangeEvent<HTMLInputElement>): void,
     type: 'text' | 'password',
     placeholder: string
 }

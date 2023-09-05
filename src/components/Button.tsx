@@ -4,7 +4,7 @@
 
 interface ButtonInterface {
     content: string,
-    onClick(): void,
+    onClick?(): void,
     width: 'auto' | 80,
     disabled: boolean
 }
