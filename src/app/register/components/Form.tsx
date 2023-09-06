@@ -1,5 +1,11 @@
 'use client'
 
+//api
+import { api } from "../../../../api"
+
+// library
+import axios from "axios"
+
 // hooks
 import { useState } from "react"
 import { useEffect } from "react"
@@ -54,8 +60,6 @@ export default function Form() {
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        setError(false)
-
         if (username.indexOf(' ') !== -1) {
             setError(true)
             setErrorMessage('Username can not contain SPACE')
@@ -67,7 +71,26 @@ export default function Form() {
             setErrorMessage('Password should be at least 4 characters')
         } else {
 
+            try {
+                const user = {
+                    username,
+                    password,
+                    avatar: 1
+                }
 
+                const res = await axios.post(`${api}/user/register`, user)
+
+                if (res.data.error) {
+                    setError(true)
+                    setErrorMessage(res.data.error)
+                } else {
+                    alert('registered!')
+                }
+            } 
+            catch {
+                setError(true)
+                setErrorMessage('Unable to register. Check your internet connection')
+            }
 
         }
     }
