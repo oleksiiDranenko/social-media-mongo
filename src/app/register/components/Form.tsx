@@ -5,10 +5,12 @@ import { api } from "../../../../api"
 
 // library
 import axios from "axios"
+import { useCookies } from "react-cookie"
 
 // hooks
 import { useState } from "react"
 import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 // components
 import Button from "@/components/Button"
@@ -27,6 +29,12 @@ export default function Form() {
     // error
     const [error, setError] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>()
+
+    // cookies
+    const [_, setCookies] = useCookies(['access_cookies'])
+
+    // router
+    const router = useRouter()
 
 
     // on change
@@ -84,7 +92,10 @@ export default function Form() {
                     setError(true)
                     setErrorMessage(res.data.error)
                 } else {
-                    alert('registered!')
+                    
+                    setCookies('access_cookies', res.data.token)
+                    window.localStorage.setItem('userId', res.data.userId)
+                    router.push('/register/avatar')
                 }
             } 
             catch {
