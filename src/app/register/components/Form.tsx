@@ -95,7 +95,7 @@ export default function Form() {
                     
                     setCookies('access_cookies', res.data.token)
                     window.localStorage.setItem('userId', res.data.userId)
-                    router.push('/register/avatar')
+                    router.push('/settings/avatar')
                 }
             } 
             catch {

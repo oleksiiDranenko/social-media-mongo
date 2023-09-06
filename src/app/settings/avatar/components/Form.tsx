@@ -1,19 +1,55 @@
 'use client'
 
+// library
+import axios from "axios"
+
+// api
+import { api } from "@/api"
+
 // hooks
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 // avatars
 import { avatars } from "@/avatars"
 
-// next components
+// components
 import Image from "next/image"
 import Button from "@/components/Button"
 
 
 export default function Form() {
 
-    const [avatarId, setAvatarId] = useState<number>(0)
+    const router = useRouter()
+
+    const [avatarId, setAvatarId] = useState<number | null>(null)
+
+
+    const updateAvatarId = async () => {
+        const userId = localStorage.getItem('userId')
+
+        const res = await axios.get(`${api}/user/get/${userId}`)
+
+        setAvatarId(res.data.avatar)
+    }
+
+    useEffect(() => {
+        updateAvatarId()
+    }, [])
+
+    
+    const handleAvatar = async () => {
+        try {
+            const userId = localStorage.getItem('userId')
+
+            await axios.patch(`${api}/user/change-avatar/${userId}`, {avatar: avatarId})
+
+            router.push('/')
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
        <>
@@ -25,14 +61,14 @@ export default function Form() {
                         key={avatar}
                     >
                         <button
-                            className={avatars.indexOf(avatar) === avatarId ? 'border-b-8  p-1 border-y-slate-400 rounded-full' : ''}
+                            className={avatars.indexOf(avatar) === avatarId ? 'border-b-8  p-2 bg-slate-300 border-y-slate-600 rounded-full' : 'bg-slate-200 rounded-full p-2'}
                             onClick={() => setAvatarId(avatars.indexOf(avatar))}
                         >
                             <Image
                                 alt="avatar" 
                                 src={`/avatars/${avatar}`} 
-                                width={50} 
-                                height={50}
+                                width={55} 
+                                height={55}
                                 className='hover:opacity-80 transition-opacity duration-100 ease-in-out'
                                 draggable={false}
                             />
@@ -41,7 +77,7 @@ export default function Form() {
                 )
             })}
         </div>
-        <Button content="Save Avatar" width='auto'/>
+        <Button content="Save Avatar" width='auto' onClick={handleAvatar} disabled={avatarId === null ? true : false}/>
        </>
     )
 }
