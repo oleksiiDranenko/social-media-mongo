@@ -6,7 +6,7 @@ interface ButtonInterface {
     content: string,
     onClick?(): void,
     width: 'auto' | 80,
-    disabled: boolean
+    disabled?: boolean
 }
 
 export default function Button( props: ButtonInterface ) {

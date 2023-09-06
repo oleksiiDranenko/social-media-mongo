@@ -1,7 +1,7 @@
 'use client'
 
 //api
-import { api } from "../../../../api"
+import { api } from "../../../api"
 
 // library
 import axios from "axios"
@@ -83,7 +83,7 @@ export default function Form() {
                 const user = {
                     username,
                     password,
-                    avatar: 1
+                    avatar: 0
                 }
 
                 const res = await axios.post(`${api}/user/register`, user)
