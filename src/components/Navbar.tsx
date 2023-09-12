@@ -22,6 +22,11 @@ import { avatars } from '@/avatars'
 import axios from 'axios'
 import { api } from '@/api'
 
+// redux
+import { logIn, logOut } from '@/redux/slices/auth-slice'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from '@/redux/store'
+
 
 interface UserInterface {
     _id: string,
@@ -33,35 +38,67 @@ interface UserInterface {
 
 export default function Navbar() {
 
+    const isLogged = useAppSelector((state) => state.authReducer.value.auth)
+    const dispatch = useDispatch()
+
     // logged state
-    const [cookies, _] = useCookies(['access_cookies'])
-    const [isLogged, setIsLogged] = useState<boolean>(false)
+    const [cookies, setCookies] = useCookies(['access_cookies'])
     const [loading, setLoading] = useState<boolean>(true)
 
     const [user, setUser] = useState<UserInterface>()
 
 
-    const getUser = async () => {
-        const userId = window.localStorage.getItem('userId')
 
-        const res = await axios.get(`${api}/user/get/${userId}`)
+    useEffect(() => {
+        const fetchData = async () => {
 
-        if(!res.data.error) {
-            setUser(res.data)
+            if (isLogged) {
+                const userId = window.localStorage.getItem('userId')
+                const res = await axios.get(`${api}/user/get/${userId}`)
+                if (!res.data.error) {
+                    setUser(res.data)
+                }
+            }
+            setLoading(false)
+
         }
-    }
+    
+        fetchData();
+    }, [isLogged]);
 
 
     useEffect(() => {
-        if (cookies.access_cookies) {
-            getUser()
-            setIsLogged(true)
-            setLoading(false)
-        } else {
-            setIsLogged(false)
-            setLoading(false)
+        const fetchData = async () => {
+
+            if (cookies.access_cookies) {
+                const userId = window.localStorage.getItem('userId')
+
+                if (userId) {
+                    const res = await axios.get(`${api}/user/get/${userId}`)
+                
+                    if (!res.data.error) {
+                        setUser(res.data)
+                    }
+
+                    dispatch(logIn())
+                    setLoading(false)
+
+                } else {
+                    setCookies('access_cookies', '')
+                    window.localStorage.removeItem('userId')
+                    dispatch(logOut())
+                    setLoading(false)
+                }
+
+            } else {
+                dispatch(logOut())
+                setLoading(false)
+            }
         }
-    }, [])
+    
+        fetchData();
+    }, []);
+    
 
     return (
         <div className='w-screen text-base h-20 border-b fixed flex items-center justify-evenly'>

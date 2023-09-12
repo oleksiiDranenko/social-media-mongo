@@ -17,6 +17,10 @@ import Button from "@/components/Button"
 import Input from "@/components/Input"
 import Link from "next/link"
 
+// redux
+import { useDispatch } from "react-redux"
+import { logIn } from "@/redux/slices/auth-slice"
+
 export default function Form() {
 
     // values
@@ -36,6 +40,8 @@ export default function Form() {
     // router
     const router = useRouter()
 
+    //redux
+    const dispatch = useDispatch()
 
     // on change
 
@@ -78,6 +84,7 @@ export default function Form() {
             
                 setCookies('access_cookies', res.data.token)
                 window.localStorage.setItem('userId', res.data.userId)
+                dispatch(logIn())
                 router.push('/')
             }
         } 
