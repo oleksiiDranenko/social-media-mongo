@@ -103,7 +103,7 @@ export default function Navbar() {
     return (
         <div className='w-screen text-base h-20 border-b fixed flex items-center justify-evenly'>
 
-            <div className='w-32 flex justify-center'>
+            <div className='w-32 flex justify-center select-none'>
                 <Link 
                     className='border pr-3 pl-3 pt-2 pb-2 rounded-lg flex items-center justify-center hover:bg-neutral-50 transition-colors duration-100 ease-in-out'
                     href={'/'}
@@ -115,7 +115,7 @@ export default function Navbar() {
                 </Link>
             </div>
 
-            <div className='w-32 flex justify-center'>
+            <div className='w-32 flex justify-center select-none'>
                 <Link 
                     className='border pr-3 pl-3 pt-2 pb-2 rounded-lg flex items-center justify-center hover:bg-neutral-50 transition-colors duration-100 ease-in-out'
                     href={'/'}
@@ -127,7 +127,7 @@ export default function Navbar() {
                 </Link>
             </div>
 
-            <div className='w-32 flex justify-center'>
+            <div className='w-32 flex justify-center select-none'>
                 
                 {loading ? (
                     <Image alt='loading' src={'/gif/loading.gif'} width={50} height={50} />
