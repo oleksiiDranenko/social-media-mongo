@@ -81,19 +81,18 @@ export default function Navbar() {
                     }
 
                     dispatch(logIn())
-                    setLoading(false)
 
                 } else {
                     setCookies('access_cookies', '')
                     window.localStorage.removeItem('userId')
                     dispatch(logOut())
-                    setLoading(false)
                 }
 
             } else {
                 dispatch(logOut())
-                setLoading(false)
             }
+
+            setLoading(false)
         }
     
         fetchData();
@@ -130,7 +129,7 @@ export default function Navbar() {
             <div className='w-32 flex justify-center select-none'>
                 
                 {loading ? (
-                    <Image alt='loading' src={'/gif/loading.gif'} width={50} height={50} />
+                    <Image alt='loading' src={'/gif/loading.gif'} width={50} height={50} priority/>
                 ) 
                 
                 : !isLogged ? (
