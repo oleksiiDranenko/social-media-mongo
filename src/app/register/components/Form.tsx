@@ -102,7 +102,7 @@ export default function Form() {
                     
                     setCookies('access_cookies', res.data.token)
                     window.localStorage.setItem('userId', res.data.userId)
-                    dispatch(logIn())
+                    dispatch(logIn(res.data))
                     router.push('/settings/avatar')
                 }
             } 

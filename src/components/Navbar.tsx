@@ -74,7 +74,7 @@ export default function Navbar() {
                         setUser(res.data)
                     }
 
-                    dispatch(logIn())
+                    dispatch(logIn(res.data))
 
                 } else {
                     setCookies('access_cookies', '')
