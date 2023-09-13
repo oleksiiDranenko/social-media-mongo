@@ -27,14 +27,8 @@ import { logIn, logOut } from '@/redux/slices/auth-slice'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/redux/store'
 
-
-interface UserInterface {
-    _id: string,
-    username: string,
-    password: string,
-    avatar: number,
-    about: string
-}
+// interface
+import { UserInterface } from '@/interfaces/User'
 
 export default function Navbar() {
 
@@ -100,7 +94,7 @@ export default function Navbar() {
     
 
     return (
-        <div className='w-screen text-base h-20 border-b fixed flex items-center justify-evenly'>
+        <div className='w-screen h-20 fixed flex items-center justify-evenly bg-white border-b text-base '>
 
             <div className='w-32 flex justify-center select-none'>
                 <Link 
@@ -144,7 +138,7 @@ export default function Navbar() {
                 : (
                     <Link
                         className='border pr-4 pl-4 pt-2 pb-2 rounded-lg flex items-center justify-center  bg-slate-600 hover:bg-slate-700 text-white transition-colors duration-100 ease-in-out'
-                        href={'/login'}
+                        href={'/user-profile'}
                     >
                         <Image alt='avatar' src={`/avatars/${avatars[user === undefined ? 0 : user.avatar]}`} width={30} height={30} className='mr-3'/>
                         {
