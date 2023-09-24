@@ -33,14 +33,14 @@ export default function UserInfo() {
                     {user?.username}
                 </h1>
         
-                {user?.about && user?.about.trim() !== '' && ( // Check if user.about is not an empty string
+                {user?.about && user?.about.trim() !== '' && ( 
                     <p className='w-80 mb-5 p-3 text-slate-400 bg-slate-50 rounded-lg'>
                         {user.about}
                     </p>
                 )}
     
                 <Link href={'/user-profile/settings'}>
-                    <Button width={80} content="Settings ->" disabled={false} />
+                    <Button width={80} content="Settings ->" disabled={false}/>
                 </Link>
             </>
             ) : null}
