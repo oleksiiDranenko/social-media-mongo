@@ -50,6 +50,7 @@ export default function Navbar() {
                 const res = await axios.get(`${api}/user/get/${userId}`)
                 if (!res.data.error) {
                     setUser(res.data)
+                    dispatch(logIn(res.data))
                 }
             }
             setLoading(false)
