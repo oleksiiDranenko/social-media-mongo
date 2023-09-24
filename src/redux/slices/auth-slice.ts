@@ -18,7 +18,12 @@ export const auth = createSlice({
     initialState,
     reducers: {
         logOut: () => {
-            return initialState
+            return {
+                value: {
+                    auth: false,
+                    user: null
+                }
+            };
         },
         logIn: (state, action: PayloadAction<UserInterface>) => {
             return {

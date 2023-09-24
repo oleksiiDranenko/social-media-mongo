@@ -42,7 +42,6 @@ export default function Navbar() {
     const [user, setUser] = useState<UserInterface>()
 
 
-
     useEffect(() => {
         const fetchData = async () => {
 
