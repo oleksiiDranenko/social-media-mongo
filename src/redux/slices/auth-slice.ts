@@ -32,9 +32,14 @@ export const auth = createSlice({
                     user: action.payload
                 }
             }
-        }
+        },
+        updateAvatar: (state, action: PayloadAction<number>) => {
+            if (state.value.user) {
+                state.value.user.avatar = action.payload;
+            }
+        },
     }
 })
 
-export const { logIn, logOut } = auth.actions;
+export const { logIn, logOut, updateAvatar } = auth.actions;
 export default auth.reducer;

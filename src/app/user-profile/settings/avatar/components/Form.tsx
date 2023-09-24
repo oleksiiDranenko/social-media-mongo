@@ -18,34 +18,30 @@ import { avatars } from "@/avatars"
 import Image from "next/image"
 import Button from "@/components/Button"
 
+// redux
+import { useAppSelector } from "@/redux/store"
+import { useDispatch } from "react-redux"
+import { logIn, updateAvatar } from "@/redux/slices/auth-slice"
+
 
 export default function Form() {
 
+    const user = useAppSelector((state) => state.authReducer.value.user)
+    const dispatch = useDispatch()
+
     const router = useRouter()
 
-    const [avatarId, setAvatarId] = useState<number | null>(null)
-
-
-    const updateAvatarId = async () => {
-        const userId = localStorage.getItem('userId')
-
-        const res = await axios.get(`${api}/user/get/${userId}`)
-
-        setAvatarId(res.data.avatar)
-    }
-
-    useEffect(() => {
-        updateAvatarId()
-    }, [])
+    const [avatarId, setAvatarId] = useState<number | undefined>(user?.avatar)
 
     
     const handleAvatar = async () => {
         try {
-            const userId = localStorage.getItem('userId')
+            if(user && avatarId){
+                await axios.patch(`${api}/user/change-avatar/${user?._id}`, {avatar: avatarId})
 
-            await axios.patch(`${api}/user/change-avatar/${userId}`, {avatar: avatarId})
-
-            router.push('/')
+                dispatch(updateAvatar(avatarId))
+                router.push('/user-profile/settings')
+            }
         } catch (error) {
             console.log(error)
         }

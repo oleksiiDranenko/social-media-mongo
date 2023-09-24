@@ -32,14 +32,13 @@ import { UserInterface } from '@/interfaces/User'
 
 export default function Navbar() {
 
+    const user = useAppSelector((state) => state.authReducer.value.user)
     const isLogged = useAppSelector((state) => state.authReducer.value.auth)
     const dispatch = useDispatch()
 
     // logged state
     const [cookies, setCookies] = useCookies(['access_cookies'])
     const [loading, setLoading] = useState<boolean>(true)
-
-    const [user, setUser] = useState<UserInterface>()
 
 
     useEffect(() => {
@@ -49,7 +48,7 @@ export default function Navbar() {
                 const userId = window.localStorage.getItem('userId')
                 const res = await axios.get(`${api}/user/get/${userId}`)
                 if (!res.data.error) {
-                    setUser(res.data)
+                    logIn(res.data)
                     dispatch(logIn(res.data))
                 }
             }
@@ -71,7 +70,7 @@ export default function Navbar() {
                     const res = await axios.get(`${api}/user/get/${userId}`)
                 
                     if (!res.data.error) {
-                        setUser(res.data)
+                        logIn(res.data)
                     }
 
                     dispatch(logIn(res.data))
@@ -140,10 +139,16 @@ export default function Navbar() {
                         className='border pr-4 pl-4 pt-2 pb-2 rounded-lg flex items-center justify-center  bg-slate-600 hover:bg-slate-700 text-white transition-colors duration-100 ease-in-out'
                         href={'/user-profile'}
                     >
-                        <Image alt='avatar' src={`/avatars/${avatars[user === undefined ? 0 : user.avatar]}`} width={30} height={30} className='mr-3'/>
-                        {
-                            !user ? '' : user?.username.length <= 7 ? user.username : (user.username.slice(0, 7) + '...')
-                        }
+                        <Image
+                            alt='avatar'
+                            src={`/avatars/${user && user.avatar !== null ? avatars[user.avatar] : avatars[0]}`}
+                            width={30}
+                            height={30}
+                            className='mr-3'
+                        />
+                        {user === null ? '' : user?.username ? (
+                            user.username.length <= 7 ? user.username : (user.username.slice(0, 7) + '...')
+                        ) : ''}
                     </Link>
                 )}
             </div>
