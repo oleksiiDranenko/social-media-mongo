@@ -78,7 +78,7 @@ export default function Settings() {
         <div className='flex flex-col items-center'>
 
             <Link 
-                className='w-fit  relative'
+                className='w-fit relative'
                 href={'/user-profile/settings/avatar'}
             >
                 <Image 

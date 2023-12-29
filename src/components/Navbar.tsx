@@ -93,7 +93,7 @@ export default function Navbar() {
     
 
     return (
-        <div className='w-screen h-20 fixed flex items-center justify-evenly bg-white border-b text-base '>
+        <div className='w-screen h-20 fixed flex items-center justify-evenly bg-white border-b text-base z-50'>
 
             <div className='w-32 flex justify-center select-none'>
                 <Link 
