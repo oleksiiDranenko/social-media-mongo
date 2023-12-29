@@ -13,13 +13,18 @@ import { avatars } from "@/avatars"
 
 // redux
 import { useDispatch } from "react-redux"
-import { logOut } from "@/redux/slices/auth-slice"
+import { logOut, updateAbout } from "@/redux/slices/auth-slice"
 import { useAppSelector } from '@/redux/store'
-
 
 // next js
 import { useRouter } from "next/navigation"
-import Input from "@/components/Input"
+import { useEffect, useState } from "react"
+
+// axios
+import axios from "axios"
+
+//api
+import { api } from "@/api"
 
 
 
@@ -29,7 +34,15 @@ export default function Settings() {
     const dispatch = useDispatch()
     const [_, setCookies] = useCookies()
 
+    const [about, setAbout] = useState<string>('')
+
     const router = useRouter()
+
+    useEffect(() => {
+        if(user?.about) {
+            setAbout(user.about)
+        } 
+    }, [user])
 
     const signOut = () => {
         dispatch(logOut())
@@ -40,11 +53,32 @@ export default function Settings() {
         router.push('/')
     }
 
+    const handleAbout = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setAbout(e.target.value)
+    }
+
+    const saveChanges = async () => {
+        try {
+            
+            const res = await axios.patch(`${api}/user/edit-about/${user?._id}`, {about})
+
+            if(!res.data.error) {
+                dispatch(updateAbout(about))
+            }
+
+            router.push('/user-profile')
+            
+        } 
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className='flex flex-col items-center'>
 
             <Link 
-                className='mb-5 w-fit  relative'
+                className='w-fit  relative'
                 href={'/user-profile/settings/avatar'}
             >
                 <Image 
@@ -59,43 +93,34 @@ export default function Settings() {
                 </p>
             </Link>
 
+            <h1 className='mt-5 mb-5 text-2xl font-bold text-slate-700'>
+                {user?.username}
+            </h1>
 
+            <textarea 
+                className="w-full p-3 bg-neutral-100 mb-5 rounded-lg focus:outline-slate-500"
+                placeholder="Update 'about' section..."
+                defaultValue={about}
+                onChange={handleAbout}
+            />
+     
 
-            <div className="w-full flex flex-col ">
+            <div className="w-full flex justify-between">
+                <Button content='Save Changes' width='flex-half' color='green' onClick={saveChanges}/>
 
-                <h2 className='font-semibold text-xl text-slate-600'>
-                    Username:
-                </h2>
-                <Link
-                    className='mt-3 mb-3 w-min min-w-fit'
-                    href={'/user-profile'}
-                >
-                    <Button content={user?.username} width='auto' color='light'/>
-                </Link>  
-
-
-                <h2 className='font-semibold text-xl text-slate-600'>
-                        Description:
-                </h2>
-                <Link
-                    className='mt-3 mb-6 w-min min-w-fit'
-                    href={'/user-profile'}
-                >
-                    <Button content={user?.about} width='auto' color='light'/>
-                </Link>  
-
+                <Button content='Sign Out' width='flex-half' color='red' onClick={signOut}/>
             </div>
 
-
-
-            <Button content='Sign Out' width={80} color='red' onClick={signOut}/>
+            
             
             <Link
-                className='mt-3 w-min min-w-fit'
+                className='mt-5 w-min min-w-fit'
                 href={'/user-profile'}
             >
                 <Button content='<- Back' width={80} />
             </Link>
+
+            
         </div>
     )
 }

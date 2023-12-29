@@ -38,8 +38,13 @@ export const auth = createSlice({
                 state.value.user.avatar = action.payload;
             }
         },
+        updateAbout: (state, action: PayloadAction<string>) => {
+            if (state.value.user) {
+                state.value.user.about = action.payload;
+            }
+        }
     }
 })
 
-export const { logIn, logOut, updateAvatar } = auth.actions;
+export const { logIn, logOut, updateAvatar, updateAbout } = auth.actions;
 export default auth.reducer;

@@ -9,7 +9,6 @@ import { api } from "@/api"
 // hooks
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 
 // avatars
 import { avatars } from "@/avatars"
@@ -21,7 +20,7 @@ import Button from "@/components/Button"
 // redux
 import { useAppSelector } from "@/redux/store"
 import { useDispatch } from "react-redux"
-import { logIn, updateAvatar } from "@/redux/slices/auth-slice"
+import { updateAvatar } from "@/redux/slices/auth-slice"
 
 
 export default function Form() {
@@ -40,7 +39,7 @@ export default function Form() {
                 await axios.patch(`${api}/user/change-avatar/${user?._id}`, {avatar: avatarId})
 
                 dispatch(updateAvatar(avatarId))
-                router.push('/user-profile/settings')
+                router.push('/user-profile/')
             }
         } catch (error) {
             console.log(error)
