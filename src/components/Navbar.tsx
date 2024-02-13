@@ -42,7 +42,7 @@ export default function Navbar() {
 
 
     useEffect(() => {
-        const fetchData = async () => {
+        (async () => {
 
             if (isLogged) {
                 const userId = window.localStorage.getItem('userId')
@@ -54,14 +54,12 @@ export default function Navbar() {
             }
             setLoading(false)
 
-        }
-    
-        fetchData();
+        })()
     }, [isLogged]);
 
 
     useEffect(() => {
-        const fetchData = async () => {
+        (async () => {
 
             if (cookies.access_cookies) {
                 const userId = window.localStorage.getItem('userId')
@@ -86,9 +84,7 @@ export default function Navbar() {
             }
 
             setLoading(false)
-        }
-    
-        fetchData();
+        })()
     }, []);
     
 
