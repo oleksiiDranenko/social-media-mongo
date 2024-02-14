@@ -53,7 +53,7 @@ export default function Post(props: PostInterface) {
                 </p>
             </div>
 
-            <PostReactions/>
+            <PostReactions postId={props._id} userId="sdfs"/>
 
             <div className="w-full h-min flex flex-row items-center mt-5">
                 <Link
