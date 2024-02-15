@@ -1,16 +1,23 @@
 // interface 
 import { PostInterface } from "@/interfaces/Post"
 
+// icons
 import { FaEdit } from "react-icons/fa";
 
-
+// next js
 import Image from "next/image"
 import Link from "next/link"
+
+// redux
 import PostReactions from "./PostReactions";
+import { useAppSelector } from "@/redux/store";
 
 
 
 export default function Post(props: PostInterface) {
+
+    const auth = useAppSelector((state) => state.authReducer.value)
+
     return (
         <div className="w-[36rem] h-fit p-5 border rounded-xl mb-10">
             <div className="w-full h-min flex flex-row items-center justify-between">
@@ -53,7 +60,11 @@ export default function Post(props: PostInterface) {
                 </p>
             </div>
 
-            <PostReactions postId={props._id} userId="sdfs"/>
+            {auth.user?._id ? 
+                <PostReactions postId={props._id} userId={auth.user?._id}/>
+                :
+                <PostReactions postId={props._id} userId='not_auth'/>
+            }
 
             <div className="w-full h-min flex flex-row items-center mt-5">
                 <Link

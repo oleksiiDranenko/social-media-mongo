@@ -2,14 +2,18 @@
 
 // react
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 //emojis
 import { emojis } from "./emojis"
 
+// axios
 import axios from "axios"
 import { api } from "@/api"
 
+
 interface ReactionInterface {
+	_id: string,
 	postId: string,
 	userId: string,
 	reactionId: number
@@ -38,88 +42,82 @@ export default function PostReactions(props: PropsInterface) {
 
 	const [selectedReaction, setSelectedReaction] = useState<number | null>(null)
 
+	const router = useRouter()
 	
 	useEffect(() => {
-		(
-			async () => {		
-				try{
-					const res = await axios.get(`${api}/reactions/get-reactions/${props.postId}`)
-					
-					res.data.reactions.forEach((react: ReactionInterface) => {
-						switch(react.reactionId) {
-							case 0:
-								const updatedReactions = [...reactions];
-								updatedReactions[0].count++;
-								setReactions(updatedReactions)
-								break;
+		(async () => {
+		  	try {
+				const res = await axios.get(`${api}/reactions/get-reactions/${props.postId}`);
+				const apiReactions = res.data.reactions;
+	
+				const updatedReactions = reactions.map((reaction, index) => {
+			  		const count = apiReactions.filter((item: ReactionInterface) => item.reactionId === index).length;
+			  		return { ...reaction, count };
+				});
 
-								case 1:
-									const updatedReactions1 = [...reactions];
-									updatedReactions1[1].count++;
-									setReactions(updatedReactions1);
-									break;
-						
-								case 2:
-									const updatedReactions2 = [...reactions];
-									updatedReactions2[2].count++;
-									setReactions(updatedReactions2);
-									break;
-						
-								case 3:
-									const updatedReactions3 = [...reactions];
-									updatedReactions3[3].count++;
-									setReactions(updatedReactions3);
-									break;
-						
-								case 4:
-									const updatedReactions4 = [...reactions];
-									updatedReactions4[4].count++;
-									setReactions(updatedReactions4);
-									break;
-						
-								default:
-									break;
-						}
-					})
-					setReactions([...reactions].sort((a, b) => b.count - a.count));
-					
-				}
-				catch(err){
-					console.log(err)
-				}
-			}
-		
-		)()
-	}, [])
+				apiReactions.forEach((reaction: ReactionInterface) => {
+					if(reaction.userId === props.userId) { 
+						setSelectedReaction(reaction.reactionId)
+					}
+				})
+
+				updatedReactions.sort((a, b) => b.count - a.count);
+
+				setReactions(updatedReactions);
+		  	} catch (err) {
+				console.log(err);
+		  	}
+		})()
+	}, [props.postId]);
+
+	const postReaction = async (id: number) => {
+		try {
+			axios.post(`${api}/reactions/react`, {
+				userId: props.userId,
+				postId: props.postId,
+				reactionId: id
+			})
+		} catch (err) {
+			console.log(err)
+		}
+	}
 
 	const handleButtonClick = (id: number) => {
 
-		if(selectedReaction === id) {
-			setSelectedReaction(null)
-			const updatedReactions = reactions.map((el) => {
-				if(el.id === id) {
-					return {...el, count: el.count - 1}
-				} else {
-					return el
-				}
-			})
-	
-			setReactions(updatedReactions)
-
+		if(props.userId === 'not_auth') {
+			router.push('/login')
 		} else {
-			const lastReaction = selectedReaction
-			setSelectedReaction(id)
-			const updatedReactions = reactions.map((el) => {
-				if(el.id === id) {
-					return {...el, count: el.count + 1}
-				} else if(el.id === lastReaction){
-					return {...el, count: el.count - 1} 
-				} else {
-					return el
-				}
-			})
-	
-			setReactions(updatedReactions)
+			postReaction(id)
+
+			if(selectedReaction === id) {
+
+				setSelectedReaction(null)
+
+				const updatedReactions = reactions.map((el) => {
+					if(el.id === id) {
+						return {...el, count: el.count - 1}
+					} else {
+						return el
+					}
+				})
+			
+				setReactions(updatedReactions)
+
+			} else {
+				const lastReaction = selectedReaction
+				setSelectedReaction(id)
+				const updatedReactions = reactions.map((el) => {
+					if(el.id === id) {
+						return {...el, count: el.count + 1}
+					} else if(el.id === lastReaction){
+						return {...el, count: el.count - 1} 
+					} else {
+						return el
+					}
+				})
+			
+				setReactions(updatedReactions)
+			}
 		}
 	}
 
