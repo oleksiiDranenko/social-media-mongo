@@ -47,16 +47,18 @@ export default function PostReactions(props: PropsInterface) {
 	useEffect(() => {
 		(async () => {
 		  	try {
+				const userId = localStorage.getItem('userId')
 				const res = await axios.get(`${api}/reactions/get-reactions/${props.postId}`);
 				const apiReactions = res.data.reactions;
-	
+
+ 
 				const updatedReactions = reactions.map((reaction, index) => {
 			  		const count = apiReactions.filter((item: ReactionInterface) => item.reactionId === index).length;
 			  		return { ...reaction, count };
 				});
 
 				apiReactions.forEach((reaction: ReactionInterface) => {
-					if(reaction.userId === props.userId) { 
+					if(reaction.userId === userId) { 
 						setSelectedReaction(reaction.reactionId)
 					}
 				})
@@ -68,7 +70,7 @@ export default function PostReactions(props: PropsInterface) {
 				console.log(err);
 		  	}
 		})()
-	}, [props.postId]);
+	}, []);
 
 	const postReaction = async (id: number) => {
 		try {
