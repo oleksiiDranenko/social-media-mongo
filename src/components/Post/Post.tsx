@@ -18,6 +18,7 @@ export default function Post(props: PostInterface) {
 
     const auth = useAppSelector((state) => state.authReducer.value)
 
+
     return (
         <div className="w-[36rem] h-fit p-5 border rounded-xl mb-10">
             <div className="w-full h-min flex flex-row items-center justify-between">
@@ -37,9 +38,11 @@ export default function Post(props: PostInterface) {
                     </span>
                 </Link>
 
-                <Link href={''} className="text-xl text-slate-700 p-2">
-                    <FaEdit />
-                </Link>
+                {props.userId === auth.user?._id ? (
+                    <Link href={`/post/edit/${props._id}`} className="text-xl text-slate-700 p-2">
+                        <FaEdit />
+                    </Link>
+                ) : null}
                 
             </div>
 
