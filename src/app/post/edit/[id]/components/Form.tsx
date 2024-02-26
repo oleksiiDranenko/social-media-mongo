@@ -47,6 +47,15 @@ export default function Form(props: PropsInterface) {
             console.log(err)
         }
     }
+
+    const deletePost = async () => {
+        try {
+            await axios.delete(`${api}/posts/delete/${props.id}`)
+            router.back()
+        } catch (err) {
+            console.log(err)
+        }
+    }
     
 
     return (
@@ -85,16 +94,22 @@ export default function Form(props: PropsInterface) {
 
 
 
-                <div className="w-full flex justify-between">
+                <div className="w-full flex justify-between mb-5">
                     <Button 
                         content="Cancel" width={"flex-half"} color="default"
                         onClick={() => router.back()}
                     />
                     <Button 
-                        content="Save Changes" width={"flex-half"} color="green"
-                        onClick={saveChanges}
+                        content="Delete" width={"flex-half"} color="red"
+                        onClick={deletePost}
                     />
                 </div>
+
+                <Button 
+                    content="Save Changes" width={"full"} color="green" 
+                    onClick={saveChanges}
+                />
+                
                 
 
             </div>
