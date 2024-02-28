@@ -72,7 +72,7 @@ export default function Post(props: PostInterface) {
             <div className="w-full h-min flex flex-row items-center mt-5">
                 <Link
                     className="w-full rounded-lg p-3 text-white bg-slate-500 hover:bg-slate-600  duration-200"
-                    href={''}
+                    href={`/post/comments/${props._id}`}
                 >
                     {"15 Comments ->"}
                 </Link>
