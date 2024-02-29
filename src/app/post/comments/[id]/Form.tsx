@@ -11,6 +11,8 @@ import { api } from "@/api"
 import { useAppSelector } from "@/redux/store"
 import { useDispatch } from "react-redux"
 import { updateList } from "@/redux/slices/comments-slice"
+
+// interface
 import { CommentInterface } from "@/interfaces/Comment"
 
 interface PropsInterface {

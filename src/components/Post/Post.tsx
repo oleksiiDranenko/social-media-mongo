@@ -11,6 +11,7 @@ import Link from "next/link"
 // redux
 import PostReactions from "./PostReactions";
 import { useAppSelector } from "@/redux/store";
+import CommentsLink from "./CommentsLink";
 
 
 
@@ -69,14 +70,7 @@ export default function Post(props: PostInterface) {
                 <PostReactions postId={props._id} userId='not_auth'/>
             }
 
-            <div className="w-full h-min flex flex-row items-center mt-5">
-                <Link
-                    className="w-full rounded-lg p-3 text-white bg-slate-500 hover:bg-slate-600  duration-200"
-                    href={`/post/comments/${props._id}`}
-                >
-                    {"15 Comments ->"}
-                </Link>
-            </div>
+            <CommentsLink _id={props._id}/>
 
             <div className="w-full h-min flex flex-row justify-between mt-5">
                 <span className="p-3 bg-slate-50 rounded-lg text-sm">

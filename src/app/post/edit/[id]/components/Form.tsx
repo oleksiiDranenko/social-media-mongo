@@ -1,12 +1,22 @@
 'use client'
 
+// components
 import Button from "@/components/Button"
+
+// next
 import Image from "next/image"
+import { useRouter } from "next/navigation"
+
+// react hooks
 import { useEffect, useState } from "react"
+
+// api
 import axios from "axios"
 import { api } from "@/api"
+
+// interface
 import { PostInterface } from "@/interfaces/Post"
-import { useRouter } from "next/navigation"
+
 
 interface PropsInterface {
     id: string

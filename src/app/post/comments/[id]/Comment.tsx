@@ -1,9 +1,16 @@
+// next
 import Link from "next/link";
 import Image from "next/image";
+
+// interface
 import { CommentInterface } from "@/interfaces/Comment";
+
+// redux
 import { useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { updateList } from "@/redux/slices/comments-slice";
+
+// api
 import axios from "axios";
 import { api } from "@/api";
 
