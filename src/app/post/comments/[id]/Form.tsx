@@ -30,6 +30,11 @@ export default function Form(props: PropsInterface) {
         e.preventDefault()
 
         try {
+
+            if(value.trim() === '') {
+                return
+            }
+
             const res = await axios.post(`${api}/comments/add`, {
                 username: user?.username,
                 avatar: user?.avatar,
@@ -38,6 +43,7 @@ export default function Form(props: PropsInterface) {
                 value,
             })
 
+            
             const newComment: CommentInterface = res.data; 
 
             dispatch(updateList([...(commentsList || []), newComment]))

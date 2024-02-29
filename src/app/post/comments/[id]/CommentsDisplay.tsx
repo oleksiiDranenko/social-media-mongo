@@ -4,6 +4,7 @@ import Comment from "./Comment"
 
 // react hooks
 import { useEffect } from "react"
+import { useState } from "react"
 
 // api
 import axios from "axios"
@@ -20,6 +21,8 @@ interface PropsInterface {
 
 export default function CommentsDisplay(props: PropsInterface) {
 
+    const [loading, setLoading] = useState<boolean>(true)
+
     const commentsList = useAppSelector((state) => state.commentsListReducer.commentsList)
 
     const dispatch = useDispatch()
@@ -31,6 +34,7 @@ export default function CommentsDisplay(props: PropsInterface) {
                     const res = await axios.get(`${api}/comments/get-comments/${props.id}`)
                     
                     dispatch(updateList(res.data))
+                    setLoading(false)
                 } catch (err) {
                     console.log(err)
                 }
@@ -40,7 +44,7 @@ export default function CommentsDisplay(props: PropsInterface) {
 
     return (
         <div>
-            {commentsList?.map((el) => (
+            {loading ? null : commentsList?.map((el) => (
                 <Comment 
                     _id={el._id}
                     username={el.username}
