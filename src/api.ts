@@ -1,1 +1,1 @@
-export const api: string = 'http://localhost:3001';
+export const api: string = 'https://social-media-mongo-api.onrender.com';
