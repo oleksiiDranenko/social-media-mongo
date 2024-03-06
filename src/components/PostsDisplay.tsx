@@ -27,7 +27,7 @@ export default function PostsDisplay() {
         (async () => {
             try {
                 const res = await axios.get(`${api}/posts/get-all`)
-                dispatch(updateList(res.data))
+                dispatch(updateList(res.data.reverse()))
             } catch (err) {
                 console.log(err)
             }

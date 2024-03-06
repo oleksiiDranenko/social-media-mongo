@@ -71,9 +71,7 @@ export default function Form(props: PropsInterface) {
     return (
         
         <div>
-            <h1 className='w-full mb-8 text-center text-3xl text-slate-800'>
-                Post edit
-            </h1>
+            
 
             <div className="w-[36rem] h-fit p-5 border rounded-xl mb-10">
                 <div className="w-full h-min flex flex-row items-center justify-between">
@@ -97,7 +95,7 @@ export default function Form(props: PropsInterface) {
 
 
                 <textarea 
-                    className="w-full h-52 p-3 border mt-5 mb-5 rounded-lg focus:outline-slate-300 resize-none"
+                    className="w-full h-52 p-3 border mt-5 mb-5 rounded-lg focus:outline-slate-500 resize-none"
                     defaultValue={value}
                     onChange={handleValue}
                 />

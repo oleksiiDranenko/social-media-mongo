@@ -2,6 +2,7 @@
 
 // react hooks
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 // api
 import axios from "axios"
@@ -25,12 +26,18 @@ export default function Form(props: PropsInterface) {
     const commentsList = useAppSelector((state) => state.commentsListReducer.commentsList)
 
     const dispatch = useDispatch()
+    const router = useRouter()
 
     const [value, setValue] = useState<string>('')
 
     const handleForm = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        if(!user) {
+            router.push('/login')
+            return
+        }
+        
         try {
 
             if(value.trim() === '') {
