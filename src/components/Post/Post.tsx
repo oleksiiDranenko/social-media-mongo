@@ -17,14 +17,14 @@ import CommentsLink from "./CommentsLink";
 
 export default function Post(props: PostInterface) {
 
-    const auth = useAppSelector((state) => state.authReducer.value)
+    const user = useAppSelector((state) => state.authReducer.value.user)
 
 
     return (
         <div className="w-[36rem] h-fit p-5 border rounded-xl mb-10">
             <div className="w-full h-min flex flex-row items-center justify-between">
                 <Link 
-                    href={`/posts/${props.userId}`}
+                    href={user?._id === props.userId ? '/user-profile' : `/profile/${props.userId}`}
                     className="flex flex-row items-center"
                 >
                     <Image 
@@ -39,7 +39,7 @@ export default function Post(props: PostInterface) {
                     </span>
                 </Link>
 
-                {props.userId === auth.user?._id ? (
+                {props.userId === user?._id ? (
                     <Link href={`/post/edit/${props._id}`} className="text-xl text-slate-700 p-2">
                         <FaEdit />
                     </Link>
@@ -64,8 +64,8 @@ export default function Post(props: PostInterface) {
                 </p>
             </div>
 
-            {auth.user?._id ? 
-                <PostReactions postId={props._id} userId={auth.user?._id}/>
+            {user?._id ? 
+                <PostReactions postId={props._id} userId={user?._id}/>
                 :
                 <PostReactions postId={props._id} userId='not_auth'/>
             }
