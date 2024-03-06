@@ -11,8 +11,9 @@ import Link from "next/link"
 // redux
 import PostReactions from "./PostReactions";
 import { useAppSelector } from "@/redux/store";
-import CommentsLink from "./CommentsLink";
 
+// components
+import CommentsLink from "./CommentsLink";
 
 
 export default function Post(props: PostInterface) {

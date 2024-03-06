@@ -1,10 +1,19 @@
 'use client'
 
+// react hooks
 import { useEffect, useState } from "react"
+
+// interface
 import { PostInterface } from "@/interfaces/Post"
+
+// aaxios
 import axios from "axios"
 import { api } from "@/api"
+
+// components
 import Post from "./Post/Post"
+
+// redux
 import { useAppSelector } from "@/redux/store"
 
 interface PropsInterface {

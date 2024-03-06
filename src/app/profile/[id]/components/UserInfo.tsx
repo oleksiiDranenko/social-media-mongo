@@ -1,10 +1,19 @@
 'use client'
 
+// react hooks
 import { useEffect, useState } from "react"
+
+// axios
 import axios from "axios"
-import { UserInterface } from "@/interfaces/User"
 import { api } from "@/api"
+
+// interface
+import { UserInterface } from "@/interfaces/User"
+
+// next
 import Image from "next/image"
+
+// avatars
 import { avatars } from "@/avatars"
 
 interface PropsInterface {

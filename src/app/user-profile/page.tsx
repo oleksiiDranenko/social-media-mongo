@@ -1,6 +1,6 @@
+// components
 import UserInfo from "./components/UserInfo"
 import UserPostsDisplay from "@/components/UserPostsDisplay"
-
 
 export default function UserProfile() {
 

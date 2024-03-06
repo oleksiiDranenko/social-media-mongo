@@ -1,14 +1,19 @@
 'use client'
 
-
+// components
 import Button from "@/components/Button"
-import axios from "axios"
 import Link from "next/link"
-import { FormEvent, useState } from "react"
+
+// axios
+import axios from "axios"
 import { api } from "@/api"
-import { useAppSelector } from "@/redux/store"
+
+// react hooks
+import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 
+// redux
+import { useAppSelector } from "@/redux/store"
 
 
 interface PostInterface {

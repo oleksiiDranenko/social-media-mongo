@@ -1,3 +1,4 @@
+// componenst
 import UserPostsDisplay from "@/components/UserPostsDisplay"
 import UserInfo from "./components/UserInfo"
 

@@ -16,7 +16,7 @@ import { api } from "@/api";
 
 export default function Comment(props: CommentInterface) {
 
-    const auth = useAppSelector((state) => state.authReducer.value)
+    const user = useAppSelector((state) => state.authReducer.value.user)
     const commentsList = useAppSelector((state) => state.commentsListReducer.commentsList)
 
     const dispatch = useDispatch()
@@ -37,7 +37,7 @@ export default function Comment(props: CommentInterface) {
         <div className="w-[36rem] h-fit p-5 border rounded-xl mb-7">
             <div className="w-full h-min flex flex-row items-center justify-between">
                 <Link 
-                    href={``}
+                    href={props.userId === user?._id ? '/user-profile' : `/profile/${props.userId}`}
                     className="flex flex-row items-center"
                 >
                     <Image 
@@ -52,7 +52,7 @@ export default function Comment(props: CommentInterface) {
                     </span>
                 </Link>
 
-                {props.userId === auth.user?._id ? (
+                {props.userId === user?._id ? (
                     <button
                         className="text-red-600 p-2"
                         onClick={deleteComment}
