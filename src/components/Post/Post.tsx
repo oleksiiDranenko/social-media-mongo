@@ -52,7 +52,7 @@ export default function Post(props: PostInterface) {
                 <div className="w-full max-h-[40rem] bg-slate-200 flex items-center justify-center mt-5 rounded-lg overflow-hidden">
                     <img 
                         src={props.img}
-                        className="max-h-[40rem] object-cover opacity-100"
+                        className="max-h-[30rem] object-cover opacity-100"
                         draggable={false}
                     />
                 </div>
