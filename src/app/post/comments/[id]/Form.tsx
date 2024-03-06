@@ -68,7 +68,7 @@ export default function Form(props: PropsInterface) {
 
     return (
         <form 
-            className="w-[36rem] mb-10 flex justify-between"
+            className="sm:w-[36rem] w-96 mb-10 flex justify-between"
             onSubmit={handleForm}
         >
             <input 

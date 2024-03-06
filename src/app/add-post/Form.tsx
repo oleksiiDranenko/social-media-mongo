@@ -107,10 +107,10 @@ export default function Form() {
     }
 
     return (
-        <div>
+        <div className="sm:w-[36rem] w-96">
 
              {error ? (
-                <div className='w-[36rem] mb-3 p-5 bg-red-400 text-white rounded-lg'>
+                <div className='w-full mb-3 p-5 bg-red-400 text-white rounded-lg'>
                     <div className='w-full mb-3 flex justify-between'>
                         <h2 className='text-lg font-semibold'>
                             Error:
@@ -131,22 +131,22 @@ export default function Form() {
 
             {!urlValid ? 
                 <form 
-                    className="w-[36rem] flex justify-between"
+                    className="w-full flex justify-between"
                     onSubmit={handleForm}
                 >
                     <input
-                        className="w-[82%] p-3 border rounded-lg focus:outline-slate-500"
+                        className="sm:w-[82%] w-[72%] p-3 border rounded-lg focus:outline-slate-500"
                         placeholder="Paste image URL..."
                         onChange={updateUrl}
                     />
                     <button
-                        className="w-[15%] p-3 bg-slate-600 hover:bg-slate-700 rounded-lg text-white"
+                        className="sm:w-[15%] w-[25%] p-3 bg-slate-600 hover:bg-slate-700 rounded-lg text-white"
                     >
                         Check
                     </button>
                 </form>
             : 
-                <div className="w-[36rem] relative flex justify-start items-center border rounded-lg overflow-hidden">
+                <div className="w-full relative flex justify-start items-center border rounded-lg overflow-hidden">
                     <img 
                         src={urlValue}
                         className="h-16 w-16 object-cover"

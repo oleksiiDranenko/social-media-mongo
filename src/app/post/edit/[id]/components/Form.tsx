@@ -73,7 +73,7 @@ export default function Form(props: PropsInterface) {
         <div>
             
 
-            <div className="w-[36rem] h-fit p-5 border rounded-xl mb-10">
+            <div className="sm:w-[36rem] w-screen h-fit p-5 border rounded-xl mb-10">
                 <div className="w-full h-min flex flex-row items-center justify-between">
                     <div
                         className="flex flex-row items-center"

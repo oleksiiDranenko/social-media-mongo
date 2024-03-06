@@ -34,7 +34,7 @@ export default function Comment(props: CommentInterface) {
     }
 
     return (
-        <div className="w-[36rem] h-fit p-5 border rounded-xl mb-7">
+        <div className="sm:w-[36rem] w-96 h-fit p-5 border rounded-xl mb-7">
             <div className="w-full h-min flex flex-row items-center justify-between">
                 <Link 
                     href={props.userId === user?._id ? '/user-profile' : `/profile/${props.userId}`}
