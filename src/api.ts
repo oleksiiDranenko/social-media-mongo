@@ -1,1 +1,1 @@
-export const api: string = 'https://social-media-mongo-api.onrender.com';
+export const api: string = 'https://gray-gifted-coral.cyclic.app';
