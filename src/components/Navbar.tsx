@@ -79,6 +79,7 @@ export default function Navbar() {
 
             } else {
                 dispatch(logOut())
+                localStorage.removeItem('userId')
             }
 
             setLoading(false)
