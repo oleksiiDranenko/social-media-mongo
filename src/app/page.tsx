@@ -1,4 +1,3 @@
-import Post from "@/components/Post/Post"
 import PostsDisplay from "@/components/PostsDisplay"
 
 export default function Home() {

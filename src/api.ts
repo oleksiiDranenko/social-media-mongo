@@ -1,2 +1,1 @@
-export const api: string = 'http://localhost:3001';
-//https://gray-gifted-coral.cyclic.app
+export const api: string = 'https://social-media-mongo-api.vercel.app/';
