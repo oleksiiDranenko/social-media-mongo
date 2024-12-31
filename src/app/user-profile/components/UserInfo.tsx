@@ -25,6 +25,7 @@ export default function UserInfo() {
 
     const [followers, setFollowers] = useState<number>(0)
     const [following, setFollowing] = useState<number>(0)
+    const [posts, setPosts] = useState<number>(0)
 
     useEffect(() => {
         (
@@ -33,9 +34,11 @@ export default function UserInfo() {
                     const userId = localStorage.getItem('userId')
                     const res1 = await axios.get(`${api}/subscriptions/get-subscribers-num/${userId}`)
                     const res2 = await axios.get(`${api}/subscriptions/get-subscriptions-to-num/${userId}`)
+                    const res3 = await axios.get(`${api}/posts/get-user-posts-num/${userId}`)
 
                     setFollowers(res1.data.subNum)
                     setFollowing(res2.data.subNum)
+                    setPosts(res3.data.postsNum)
                 } catch (error) {
                     console.error(error)
             }
@@ -62,7 +65,7 @@ export default function UserInfo() {
 
                 <div className='w-80 mb-5 p-3 flex flex-row'>
                     <div className="w-1/3 flex flex-col items-center">
-                        <p>5</p>
+                        <p>{posts}</p>
                         <p>posts</p>
                     </div>
                     <div className="w-1/3 flex flex-col items-center">

@@ -37,6 +37,7 @@ export default function UserInfo(props: PropsInterface) {
 
     const [followers, setFollowers] = useState<number>(0)
     const [following, setFollowing] = useState<number>(0)
+    const [posts, setPosts] = useState<number>(0)
 
     const [subscriptionId, setSubscriptionId] = useState<string>("")
     const [subscriptionLoading, setSubscriptionLoading] = useState<boolean>(false)
@@ -63,6 +64,9 @@ export default function UserInfo(props: PropsInterface) {
                         return status === 200 || status === 404;
                     }
                 });
+
+                const res4 = await axios.get(`${api}/posts/get-user-posts-num/${props.id}`)
+                setPosts(res4.data.postsNum)
 
                 if(res3.data._id){
                     setSubscriptionId(res3.data._id)
@@ -101,7 +105,7 @@ export default function UserInfo(props: PropsInterface) {
             } catch (error) {
                 console.log(error)
             }
-            
+
         } else {
             router.push('/login')
         }
@@ -126,7 +130,7 @@ export default function UserInfo(props: PropsInterface) {
 
                 <div className='w-80 mb-5 p-3 flex flex-row'>
                     <div className="w-1/3 flex flex-col items-center">
-                        <p>5</p>
+                        <p>{posts}</p>
                         <p>posts</p>
                     </div>
                     <div className="w-1/3 flex flex-col items-center">
