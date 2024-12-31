@@ -11,10 +11,37 @@ import { avatars } from "@/avatars"
 //redux
 import { useAppSelector } from '@/redux/store'
 
+//react
+import { useEffect, useState } from "react"
+
+// api
+import axios from "axios"
+import { api } from "@/api"
+
 export default function UserInfo() {
 
     const user = useAppSelector((state) => state.authReducer.value.user)
     const isLogged = useAppSelector((state) => state.authReducer.value.auth)
+
+    const [followers, setFollowers] = useState<number>(0)
+    const [following, setFollowing] = useState<number>(0)
+
+    useEffect(() => {
+        (
+            async () => {
+                try {
+                    const userId = localStorage.getItem('userId')
+                    const res1 = await axios.get(`${api}/subscriptions/get-subscribers-num/${userId}`)
+                    const res2 = await axios.get(`${api}/subscriptions/get-subscriptions-to-num/${userId}`)
+
+                    setFollowers(res1.data.subNum)
+                    setFollowing(res2.data.subNum)
+                } catch (error) {
+                    console.error(error)
+            }
+            }
+        ) ()
+    }, [])
 
     return (
         <div className='w-screen flex flex-col items-center'>
@@ -30,11 +57,26 @@ export default function UserInfo() {
                 />
     
                 <h1 className='mt-5 mb-5 text-2xl font-bold text-slate-700'>
-                    {user?.username}
+                    @{user?.username}
                 </h1>
+
+                <div className='w-80 mb-5 p-3 flex flex-row'>
+                    <div className="w-1/3 flex flex-col items-center">
+                        <p>5</p>
+                        <p>posts</p>
+                    </div>
+                    <div className="w-1/3 flex flex-col items-center">
+                        <p>{followers}</p>
+                        <p>followers</p>
+                    </div>
+                    <div className="w-1/3 flex flex-col items-center">
+                        <p>{following}</p>
+                        <p>following</p>
+                    </div>
+                </div>
         
                 {user?.about && user?.about.trim() !== '' && ( 
-                    <p className='w-80 mb-5 p-3 text-slate-400 bg-slate-50 rounded-lg'>
+                    <p className='w-80 mb-5 p-3 bg-slate-50 rounded-lg'>
                         {user.about}
                     </p>
                 )}
