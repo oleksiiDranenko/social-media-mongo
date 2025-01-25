@@ -19,9 +19,11 @@ import { avatars } from "@/avatars"
 
 // components
 import Button from "@/components/Button"
+import UserPostsDisplay from "@/components/UserPostsDisplay";
 
 // redux
 import { useAppSelector } from "@/redux/store"
+
 
 interface PropsInterface {
     id: string
@@ -113,6 +115,7 @@ export default function UserInfo(props: PropsInterface) {
 
 
     return (
+        <>
         <div className='w-screen flex flex-col items-center pb-3'>
             {!loading ?
             <>
@@ -164,5 +167,12 @@ export default function UserInfo(props: PropsInterface) {
             <Image alt='loading' src={'/gif/loading.gif'} width={50} height={50} priority/> 
             }
         </div>
+
+        {!loading ? 
+            <UserPostsDisplay id={props.id}/>
+            : null
+        }
+
+        </>
     )
 }

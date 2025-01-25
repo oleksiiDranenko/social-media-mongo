@@ -4,6 +4,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import Button from "@/components/Button"
+import UserPostsDisplay from "@/components/UserPostsDisplay"
 
 // avatars
 import { avatars } from "@/avatars"
@@ -18,6 +19,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { api } from "@/api"
 
+
 export default function UserInfo() {
 
     const user = useAppSelector((state) => state.authReducer.value.user)
@@ -27,11 +29,12 @@ export default function UserInfo() {
     const [following, setFollowing] = useState<number>(0)
     const [posts, setPosts] = useState<number>(0)
 
+    const userId = localStorage.getItem('userId')?.toString()
+
     useEffect(() => {
         (
             async () => {
                 try {
-                    const userId = localStorage.getItem('userId')
                     const res1 = await axios.get(`${api}/subscriptions/get-subscribers-num/${userId}`)
                     const res2 = await axios.get(`${api}/subscriptions/get-subscriptions-to-num/${userId}`)
                     const res3 = await axios.get(`${api}/posts/get-user-posts-num/${userId}`)
@@ -47,6 +50,7 @@ export default function UserInfo() {
     }, [])
 
     return (
+        <>
         <div className='w-screen flex flex-col items-center'>
             
             {isLogged ? (
@@ -91,5 +95,9 @@ export default function UserInfo() {
             ) : null}
 
         </div>
+
+        <UserPostsDisplay id={userId}/>
+        
+        </>
   )
 }
