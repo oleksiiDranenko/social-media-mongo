@@ -72,10 +72,13 @@ export default function UserInfo() {
                         <p>{posts}</p>
                         <p>posts</p>
                     </div>
-                    <div className="w-1/3 flex flex-col items-center">
+                    <Link 
+                        className="w-1/3 flex flex-col items-center"
+                        href={`${window.location.href}/subscribers`}
+                    >
                         <p>{followers}</p>
                         <p>followers</p>
-                    </div>
+                    </Link>
                     <div className="w-1/3 flex flex-col items-center">
                         <p>{following}</p>
                         <p>following</p>
